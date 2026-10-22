@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h2>Ajouter une chaussure</h2>
+
+      <div class="mb-2">
+        <label class="form-label">ID</label>
+        <input type="number" class="form-control" name="id" [(ngModel)]="id" />
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Nom</label>
+        <input type="text" class="form-control" name="nom" [(ngModel)]="nom" />
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Prix (DT)</label>
+        <input type="number" class="form-control" name="prix" [(ngModel)]="prix" />
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Taille</label>
+        <input type="number" class="form-control" name="taille" [(ngModel)]="taille" />
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Modèle de chaussure</label>
+        <select class="form-select" name="idModel" [(ngModel)]="idModel">
+          @for (m of modeles; track m.idModel) {
+            <option [ngValue]="m.idModel">{{ m.nomModel }}</option>
+          }
+        </select>
+      </div>
+
+      <button class="btn btn-success mt-2" (click)="ajouter()">Ajouter</button>
+      <a class="btn btn-secondary mt-2 ms-2" routerLink="/chaussures">Retour</a>
+    </div>
+  </div>
+</div>

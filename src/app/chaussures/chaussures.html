@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <h2>Liste des chaussures</h2>
+
+  <a class="btn btn-success mb-3" routerLink="/add-chaussure">Ajouter une chaussure</a>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr style="background-color: black; color: white;">
+        <th style="background-color: black; color: white;">ID</th>
+        <th style="background-color: black; color: white;">Nom</th>
+        <th style="background-color: black; color: white;">Prix (DT)</th>
+        <th style="background-color: black; color: white;">Taille</th>
+        <th style="background-color: black; color: white;">Modèle de chaussure</th>
+        <th style="background-color: black; color: white;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of chaussures(); track c.id) {
+        <tr>
+          <td>{{ c.id }}</td>
+          <td>{{ c.nom }}</td>
+          <td>{{ c.prix }}</td>
+          <td>{{ c.taille }}</td>
+          <td>{{ c.modelDeChaussure.nomModel }}</td>
+          <td>
+            <a class="btn btn-warning btn-sm me-2" [routerLink]="['/update-chaussure', c.id]">Modifier</a>
+            <button class="btn btn-danger btn-sm" (click)="supprimer(c.id)">Supprimer</button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6" class="text-center">Aucune chaussure.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

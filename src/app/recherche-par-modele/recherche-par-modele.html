@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <h2>Recherche par modèle de chaussure</h2>
+
+  <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+    <label>Modèles de chaussure</label>
+    <select class="form-control form-control-lg" id="idModel" name="idModel"
+            [(ngModel)]="idModel" (change)="onChange()">
+      <option [ngValue]="0">Tous les modèles</option>
+      @for (m of modeles; track m.idModel) {
+        <option [ngValue]="m.idModel">{{ m.nomModel }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr style="background-color: black; color: white;">
+            <th style="background-color: black; color: white;">ID</th>
+            <th style="background-color: black; color: white;">Nom</th>
+            <th style="background-color: black; color: white;">Prix (DT)</th>
+            <th style="background-color: black; color: white;">Taille</th>
+            <th style="background-color: black; color: white;">Modèle de chaussure</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of chaussures; track c.id) {
+            <tr>
+              <td>{{ c.id }}</td>
+              <td>{{ c.nom }}</td>
+              <td>{{ c.prix }}</td>
+              <td>{{ c.taille }}</td>
+              <td>{{ c.modelDeChaussure.nomModel }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="text-center">Aucune chaussure.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
