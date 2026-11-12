@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Chaussure } from '../model/chaussure.model';
 import { ModelDeChaussure, MODELES } from '../model/modelDeChaussure.model';
+import { ChaussureService } from '../services/chaussure.service';
 
 @Component({
   selector: 'app-recherche-par-modele',
@@ -9,24 +11,22 @@ import { ModelDeChaussure, MODELES } from '../model/modelDeChaussure.model';
   templateUrl: './recherche-par-modele.html'
 })
 export class RechercheParModele {
-  chaussures: any[] = [];
+  chaussures: Chaussure[] = [];
   modeles: ModelDeChaussure[] = MODELES;
   idModel = 0; // 0 = tous les modèles
+  erreur = '';
 
-  constructor() {
-    this.chaussures = this.toutes();
-  }
-
-  toutes(): any[] {
-    return JSON.parse(localStorage.getItem('chaussures') || '[]');
+  constructor(private chaussureService: ChaussureService) {
+    this.onChange();
   }
 
   onChange(): void {
-    const toutes = this.toutes();
-    if (this.idModel) {
-      this.chaussures = toutes.filter((c) => c.modelDeChaussure.idModel == this.idModel);
-    } else {
-      this.chaussures = toutes;
+    try {
+      this.chaussures = this.chaussureService.rechercherParModele(this.idModel);
+      this.erreur = '';
+    } catch (error) {
+      this.erreur = error instanceof Error ? error.message : 'Impossible de rechercher les chaussures.';
+      this.chaussures = [];
     }
   }
 }

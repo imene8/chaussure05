@@ -1,6 +1,10 @@
 <div class="container mt-4">
   <h2>Recherche par modèle de chaussure</h2>
 
+  @if (erreur) {
+    <div class="alert alert-danger" role="alert">{{ erreur }}</div>
+  }
+
   <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
     <label>Modèles de chaussure</label>
     <select class="form-control form-control-lg" id="idModel" name="idModel"

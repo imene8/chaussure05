@@ -1,11 +1,36 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" routerLink="/chaussures">Gestion Chaussures</a>
-    <div class="navbar-nav">
-      <a class="nav-link" routerLink="/chaussures" routerLinkActive="active">Liste</a>
-      <a class="nav-link" routerLink="/add-chaussure" routerLinkActive="active">Ajouter</a>
-      <a class="nav-link" routerLink="/recherche-par-modele" routerLinkActive="active">Recherche par modèle</a>
-      <a class="nav-link" routerLink="/recherche-par-nom" routerLinkActive="active">Recherche par nom</a>
+    <div class="navbar-menus">
+      @if (authService.isloggedIn) {
+        <details class="nav-dropdown nav-dropdown-left">
+          <summary>Menu</summary>
+          <div class="nav-dropdown-menu">
+            <a routerLink="/chaussures" routerLinkActive="active">Liste</a>
+            @if (authService.isAdmin()) {
+              <a routerLink="/add-chaussure" routerLinkActive="active">Ajouter</a>
+            }
+            <a routerLink="/recherche-par-modele" routerLinkActive="active">Recherche par modèle</a>
+            <a routerLink="/recherche-par-nom" routerLinkActive="active">Recherche par nom</a>
+          </div>
+        </details>
+      }
+
+      <details class="nav-dropdown">
+        <summary>
+          Connexion
+          @if (authService.isloggedIn) {
+            <span class="nav-username">({{ authService.loggedUser }})</span>
+          }
+        </summary>
+        <div class="nav-dropdown-menu nav-dropdown-menu-end">
+          @if (authService.isloggedIn) {
+            <button type="button" (click)="seDeconnecter()">Déconnexion</button>
+          } @else {
+            <a routerLink="/login" routerLinkActive="active">Se connecter</a>
+          }
+        </div>
+      </details>
     </div>
   </div>
 </nav>

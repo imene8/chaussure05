@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <h2 class="mb-4">Connexion</h2>
+
+      @if (erreur) {
+        <div class="alert alert-danger" role="alert" aria-live="polite">{{ erreur }}</div>
+      }
+
+      <form (ngSubmit)="seConnecter()">
+        <div class="mb-3">
+          <label class="form-label" for="username">Nom d’utilisateur</label>
+          <input
+            id="username"
+            class="form-control"
+            name="username"
+            [(ngModel)]="username"
+            autocomplete="username"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="password">Mot de passe</label>
+          <input
+            id="password"
+            type="password"
+            class="form-control"
+            name="password"
+            [(ngModel)]="password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+        <button class="btn btn-primary" type="submit">Se connecter</button>
+      </form>
+
+      <p class="form-text mt-3">Comptes de démonstration : admin / 123 et imene / 123.</p>
+    </div>
+  </div>
+</div>

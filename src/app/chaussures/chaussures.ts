@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { MODELES } from '../model/modelDeChaussure.model';
+import { Chaussure } from '../model/chaussure.model';
+import { AuthService } from '../services/auth.service';
+import { ChaussureService } from '../services/chaussure.service';
 
 @Component({
   selector: 'app-chaussures',
@@ -10,31 +12,36 @@ import { MODELES } from '../model/modelDeChaussure.model';
   styleUrl: './chaussures.css'
 })
 export class Chaussures {
-  chaussures = signal<any[]>([]);
+  chaussures = signal<Chaussure[]>([]);
+  erreur = signal('');
+  readonly authService = inject(AuthService);
+  private readonly chaussureService = inject(ChaussureService);
 
   constructor() {
     this.charger();
   }
 
   charger(): void {
-    const data = localStorage.getItem('chaussures');
-    if (data === null) {
-      // Données de départ (première ouverture seulement)
-      const depart = [
-        { id: 1, nom: 'Air Max', prix: 320, taille: 42, modelDeChaussure: MODELES[0] },
-        { id: 2, nom: 'Stan Smith', prix: 250, taille: 41, modelDeChaussure: MODELES[1] },
-        { id: 3, nom: 'Timberland', prix: 480, taille: 44, modelDeChaussure: MODELES[3] },
-      ];
-      localStorage.setItem('chaussures', JSON.stringify(depart));
-      this.chaussures.set(depart);
-    } else {
-      this.chaussures.set(JSON.parse(data));
+    try {
+      this.chaussures.set(this.chaussureService.liste());
+      this.erreur.set('');
+    } catch (error) {
+      this.erreur.set(error instanceof Error ? error.message : 'Impossible de charger les chaussures.');
     }
   }
 
   supprimer(id: number): void {
-    const reste = this.chaussures().filter((c) => c.id != id);
-    localStorage.setItem('chaussures', JSON.stringify(reste));
-    this.chaussures.set(reste);
+    if (!this.authService.isAdmin()) {
+      return;
+    }
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette chaussure ?')) {
+      return;
+    }
+    try {
+      this.chaussureService.supprimer(id);
+      this.charger();
+    } catch (error) {
+      this.erreur.set(error instanceof Error ? error.message : 'Impossible de supprimer cette chaussure.');
+    }
   }
 }

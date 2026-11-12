@@ -44,6 +44,15 @@ To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use th
 ng test
 ```
 
+## Authentication
+
+The application includes two demonstration accounts:
+
+- Administrator: `admin` / `123`
+- Standard user: `imene` / `123`
+
+Both accounts can browse and search shoes. Only the administrator can add, update, or delete shoes. Authentication is currently implemented in the browser and is intended for demonstration only; it is not a security boundary for a production application.
+
 ## Running end-to-end tests
 
 For end-to-end (e2e) testing, run:

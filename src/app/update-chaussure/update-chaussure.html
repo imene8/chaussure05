@@ -3,6 +3,10 @@
     <div class="col-md-8 offset-md-2">
       <h2>Modifier une chaussure</h2>
 
+      @if (erreur) {
+        <div class="alert alert-danger" role="alert" aria-live="polite">{{ erreur }}</div>
+      }
+
       <div class="mb-2">
         <label class="form-label">ID</label>
         <input type="number" class="form-control" name="id" [(ngModel)]="id" disabled />
@@ -10,22 +14,22 @@
 
       <div class="mb-2">
         <label class="form-label">Nom</label>
-        <input type="text" class="form-control" name="nom" [(ngModel)]="nom" />
+        <input type="text" class="form-control" name="nom" [(ngModel)]="nom" required />
       </div>
 
       <div class="mb-2">
         <label class="form-label">Prix (DT)</label>
-        <input type="number" class="form-control" name="prix" [(ngModel)]="prix" />
+        <input type="number" class="form-control" name="prix" [(ngModel)]="prix" min="0.01" step="0.01" required />
       </div>
 
       <div class="mb-2">
         <label class="form-label">Taille</label>
-        <input type="number" class="form-control" name="taille" [(ngModel)]="taille" />
+        <input type="number" class="form-control" name="taille" [(ngModel)]="taille" min="1" step="1" required />
       </div>
 
       <div class="mb-2">
         <label class="form-label">Modèle de chaussure</label>
-        <select class="form-select" name="idModel" [(ngModel)]="idModel">
+        <select class="form-select" name="idModel" [(ngModel)]="idModel" required>
           @for (m of modeles; track m.idModel) {
             <option [ngValue]="m.idModel">{{ m.nomModel }}</option>
           }
